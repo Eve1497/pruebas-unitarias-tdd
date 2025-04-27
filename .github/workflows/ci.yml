@@ -1,0 +1,30 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - develop  # Esto ejecutará las pruebas cuando hagas push a develop
+  pull_request:
+    branches:
+      - develop  # Esto ejecutará las pruebas cuando se cree un PR hacia develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Ejecutar en la última versión de Ubuntu
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'  # Usar la versión de Python que necesites
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Instalar dependencias desde el archivo requirements.txt
+
+    - name: Run tests
+      run: |
+        python -m unittest discover tests  # Ejecuta las pruebas unitarias
+
